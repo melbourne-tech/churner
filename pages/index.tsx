@@ -8,8 +8,8 @@ const Home = () => {
     <>
       <Head>
         <title>
-          Credit Card Churner Australia &#8212; Compare Welcome Point Bonuses &
-          Offers
+          Credit Card Churner Australia &#8212; Compare Welcome Point Bonuses
+          &amp; Offers
         </title>
         <link rel="icon" href="https://fav.farm/🧈" />
       </Head>
@@ -21,7 +21,7 @@ const Home = () => {
           Credit Card Churner Australia
         </h1>
         <h2 className="text-3xl font-semibold">
-          Compare Welcome Point Bonuses & Offers
+          Compare Welcome Point Bonuses &amp; Offers
         </h2>
         <p className="text-2xl mt-8">Coming Soon...</p>
       </main>

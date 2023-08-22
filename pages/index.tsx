@@ -11,6 +11,7 @@ const Home = () => {
           Credit Card Churner Australia &#8212; Compare Welcome Point Bonuses &
           Offers
         </title>
+        <link rel="icon" href="https://fav.farm/🧈" />
       </Head>
 
       <main

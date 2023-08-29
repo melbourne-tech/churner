@@ -1,5 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import Layout from '~/components/layout/Layout'
 import supabaseAdmin from '~/lib/supabase-admin'
+import { NextPageWithLayout } from '~/lib/types'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data, error } = await supabaseAdmin
@@ -44,7 +46,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 interface CardPageProps
   extends InferGetStaticPropsType<typeof getStaticProps> {}
 
-const CardPage = ({ card }: CardPageProps) => {
+const CardPage: NextPageWithLayout<CardPageProps> = ({ card }) => {
   return (
     <div>
       <pre>
@@ -53,5 +55,7 @@ const CardPage = ({ card }: CardPageProps) => {
     </div>
   )
 }
+
+CardPage.getLayout = (page) => <Layout>{page}</Layout>
 
 export default CardPage

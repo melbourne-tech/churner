@@ -1,8 +1,8 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { useMemo, useState } from 'react'
 import CardLink from '~/components/CardLink'
-import Layout from '~/components/Layout'
+import Layout from '~/components/layout/Layout'
 import { Label } from '~/components/ui/Label'
 import {
   Select,
@@ -11,14 +11,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/Select'
+import { graphql } from '~/gql'
 import { Database } from '~/lib/database.types'
-import { adminGraphQL } from '~/lib/supabase-admin'
+import { adminGraphQLClient } from '~/lib/supabase-admin'
 import { NextPageWithLayout } from '~/lib/types'
 
 export type RewardsProgram = Database['public']['Enums']['rewards_program']
 
-export const getStaticProps: GetStaticProps = async () => {
-  const query = /* GraphQL */ `
+export const getStaticProps = async () => {
+  const query = graphql(/* GraphQL */ `
     query CardsQuery {
       cards: cardsCollection {
         edges {
@@ -56,19 +57,20 @@ export const getStaticProps: GetStaticProps = async () => {
         }
       }
     }
-  `
+  `)
 
-  const { data } = await adminGraphQL(query)
+  const data = await adminGraphQLClient.request(query)
+  if (!data.cards) throw new Error('Failed to fetch data from Supabase')
 
   return {
     props: {
       cards: data.cards.edges
-        .map(({ node }: any) => ({
+        .map(({ node }) => ({
           ...node,
-          bonusPoints: node.bonusPoints.edges.map(({ node }: any) => node),
-          scores: node.scores.edges.map(({ node }: any) => node),
+          bonusPoints: node.bonusPoints?.edges.map(({ node }) => node) ?? [],
+          scores: node.scores.edges.map(({ node }) => node),
         }))
-        .sort((a: any, b: any) => b.scores[0].score - a.scores[0].score),
+        .sort((a, b) => (b.scores[0]?.score ?? 0) - (a.scores[0]?.score ?? 0)),
     },
   }
 }
@@ -76,14 +78,12 @@ export const getStaticProps: GetStaticProps = async () => {
 interface HomePageProps
   extends InferGetStaticPropsType<typeof getStaticProps> {}
 
-const Home: NextPageWithLayout = ({ cards: allCards }: HomePageProps) => {
+const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
   const [rewardsProgram, setRewardsProgram] = useState<RewardsProgram>('QANTAS')
   const cards = useMemo(
     () =>
-      allCards.filter((card: any) =>
-        card.scores.some(
-          (score: any) => score.rewardsProgram === rewardsProgram
-        )
+      allCards.filter((card) =>
+        card.scores.some((score) => score.rewardsProgram === rewardsProgram)
       ),
     [allCards, rewardsProgram]
   )
@@ -117,13 +117,14 @@ const Home: NextPageWithLayout = ({ cards: allCards }: HomePageProps) => {
       </div>
 
       <ul className="flex flex-col divide-y">
-        {cards.map((card: any) => {
-          const score = card.scores.find(
-            (score: any) => score.rewardsProgram === rewardsProgram
-          )?.score
-          const bonusPoints = card.bonusPoints.find(
-            (bonusPoint: any) => bonusPoint.rewardsProgram === rewardsProgram
-          )?.amount
+        {cards.map((card) => {
+          const score =
+            card.scores.find((score) => score.rewardsProgram === rewardsProgram)
+              ?.score ?? 0
+          const bonusPoints =
+            card.bonusPoints.find(
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+            )?.amount ?? 0
 
           return (
             <li key={card.id}>
@@ -134,7 +135,7 @@ const Home: NextPageWithLayout = ({ cards: allCards }: HomePageProps) => {
                 cardName={card.name}
                 score={score}
                 bonusPoints={bonusPoints}
-                yearlyFeeCents={card.yearlyFeeCents}
+                yearlyFeeCents={Number(card.yearlyFeeCents)}
               />
             </li>
           )

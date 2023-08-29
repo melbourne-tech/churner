@@ -31,3 +31,26 @@ export async function getUserFromRequest(request: NextRequest) {
 
   return user
 }
+
+export async function adminGraphQL(
+  query: string,
+  variables?: { [key: string]: any }
+) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: `${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    }
+  )
+
+  return await response.json()
+}

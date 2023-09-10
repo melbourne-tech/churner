@@ -114,6 +114,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
       bonusPointsStats:
         data.bonusPointsStatsCollection?.edges.map(({ node }) => node) ?? [],
     },
+    revalidate: 10 * 60, // 10 minutes
   }
 }
 

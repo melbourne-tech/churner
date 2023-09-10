@@ -63,6 +63,7 @@ export const getStaticProps = async () => {
         }))
         .sort((a, b) => (b.scores[0]?.score ?? 0) - (a.scores[0]?.score ?? 0)),
     },
+    revalidate: 10 * 60, // 10 minutes
   }
 }
 

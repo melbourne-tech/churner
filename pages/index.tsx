@@ -74,7 +74,7 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
     RewardsProgram.Qantas,
     [RewardsProgram.Qantas, RewardsProgram.Velocity]
   )
-  // old ordering: .sort((a, b) => (b.scores[0]?.score ?? 0) - (a.scores[0]?.score ?? 0))
+
   const cards = useMemo(
     () =>
       allCards

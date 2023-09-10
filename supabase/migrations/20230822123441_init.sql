@@ -34,7 +34,7 @@ create table
     "url" text,
     "image_path" text,
     "yearly_fee_cents" bigint not null default 0,
-    "points_per_dollar" numeric(5, 2) not null default 0,
+    "points_per_dollar" numeric(5, 3) not null default 0,
     unique ("issuer_id", "slug")
   );
 

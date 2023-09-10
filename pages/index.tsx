@@ -55,13 +55,11 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      cards: data.cards.edges
-        .map(({ node }) => ({
-          ...node,
-          bonusPoints: node.bonusPoints?.edges.map(({ node }) => node) ?? [],
-          scores: node.scores.edges.map(({ node }) => node),
-        }))
-        .sort((a, b) => (b.scores[0]?.score ?? 0) - (a.scores[0]?.score ?? 0)),
+      cards: data.cards.edges.map(({ node }) => ({
+        ...node,
+        bonusPoints: node.bonusPoints?.edges.map(({ node }) => node) ?? [],
+        scores: node.scores.edges.map(({ node }) => node),
+      })),
     },
     revalidate: 10 * 60, // 10 minutes
   }
@@ -76,11 +74,33 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
     RewardsProgram.Qantas,
     [RewardsProgram.Qantas, RewardsProgram.Velocity]
   )
+
   const cards = useMemo(
     () =>
-      allCards.filter((card) =>
-        card.scores.some((score) => score.rewardsProgram === rewardsProgram)
-      ),
+      allCards
+        .filter((card) =>
+          card.scores.some((score) => score.rewardsProgram === rewardsProgram)
+        )
+        .sort((a, b) => {
+          const aScore =
+            a.scores.find((score) => score.rewardsProgram === rewardsProgram)
+              ?.score ?? 0
+          const bScore =
+            b.scores.find((score) => score.rewardsProgram === rewardsProgram)
+              ?.score ?? 0
+
+          const aPoints =
+            a.bonusPoints.find(
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+            )?.amount ?? 0
+          const bPoints =
+            b.bonusPoints.find(
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+            )?.amount ?? 0
+
+          return bScore - aScore || bPoints - aPoints
+        }),
+
     [allCards, rewardsProgram]
   )
 

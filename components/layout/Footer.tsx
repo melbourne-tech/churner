@@ -1,15 +1,15 @@
-import { GithubIcon, Globe, Mail, TwitterIcon } from 'lucide-react'
+import { Github, Globe, Mail, Twitter } from 'lucide-react'
 
 const SOCIAL = [
   {
     name: 'Twitter',
     href: 'https://twitter.com/alaisteryoung',
-    icon: <TwitterIcon className="h-5 w-5" aria-hidden="true" />,
+    icon: <Twitter className="h-5 w-5" aria-hidden="true" />,
   },
   {
     name: 'GitHub',
     href: 'https://github.com/alaister/churner.com.au',
-    icon: <GithubIcon className="h-5 w-5" aria-hidden="true" />,
+    icon: <Github className="h-5 w-5" aria-hidden="true" />,
   },
   {
     name: 'Website',

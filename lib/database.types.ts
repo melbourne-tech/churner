@@ -42,9 +42,10 @@ export interface Database {
           id: string
           minimum_spend_cents: number
           minimum_spend_per_day_cents: number | null
-          rewards_program: Database["public"]["Enums"]["rewards_program"]
+          rewards_program: Database['public']['Enums']['rewards_program']
           time_frame_days: number
           updated_at: string
+          yearly_fee_cents: number
         }
         Insert: {
           amount?: number
@@ -53,9 +54,10 @@ export interface Database {
           id?: string
           minimum_spend_cents?: number
           minimum_spend_per_day_cents?: number | null
-          rewards_program: Database["public"]["Enums"]["rewards_program"]
+          rewards_program: Database['public']['Enums']['rewards_program']
           time_frame_days?: number
           updated_at?: string
+          yearly_fee_cents?: number
         }
         Update: {
           amount?: number
@@ -64,16 +66,17 @@ export interface Database {
           id?: string
           minimum_spend_cents?: number
           minimum_spend_per_day_cents?: number | null
-          rewards_program?: Database["public"]["Enums"]["rewards_program"]
+          rewards_program?: Database['public']['Enums']['rewards_program']
           time_frame_days?: number
           updated_at?: string
+          yearly_fee_cents?: number
         }
         Relationships: [
           {
-            foreignKeyName: "bonus_points_card_id_fkey"
-            columns: ["card_id"]
-            referencedRelation: "cards"
-            referencedColumns: ["id"]
+            foreignKeyName: 'bonus_points_card_id_fkey'
+            columns: ['card_id']
+            referencedRelation: 'cards'
+            referencedColumns: ['id']
           }
         ]
       }
@@ -88,7 +91,6 @@ export interface Database {
           slug: string
           updated_at: string
           url: string | null
-          yearly_fee_cents: number
         }
         Insert: {
           created_at?: string
@@ -100,7 +102,6 @@ export interface Database {
           slug: string
           updated_at?: string
           url?: string | null
-          yearly_fee_cents?: number
         }
         Update: {
           created_at?: string
@@ -112,14 +113,13 @@ export interface Database {
           slug?: string
           updated_at?: string
           url?: string | null
-          yearly_fee_cents?: number
         }
         Relationships: [
           {
-            foreignKeyName: "cards_issuer_id_fkey"
-            columns: ["issuer_id"]
-            referencedRelation: "issuers"
-            referencedColumns: ["id"]
+            foreignKeyName: 'cards_issuer_id_fkey'
+            columns: ['issuer_id']
+            referencedRelation: 'issuers'
+            referencedColumns: ['id']
           }
         ]
       }
@@ -152,13 +152,60 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      bonus_points_stats: {
+        Row: {
+          max_amount: number | null
+          max_minimum_spend_cents: number | null
+          max_minimum_spend_per_day_cents: number | null
+          max_time_frame_days: number | null
+          max_yearly_fee_cents: number | null
+          min_amount: number | null
+          min_minimum_spend_cents: number | null
+          min_minimum_spend_per_day_cents: number | null
+          min_time_frame_days: number | null
+          min_yearly_fee_cents: number | null
+          rewards_program: Database['public']['Enums']['rewards_program'] | null
+        }
+        Relationships: []
+      }
+      cards_normalized_stats: {
+        Row: {
+          amount: number | null
+          id: string | null
+          minimum_spend_per_day_cents: number | null
+          rewards_program: Database['public']['Enums']['rewards_program'] | null
+          yearly_fee_cents: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'bonus_points_card_id_fkey'
+            columns: ['id']
+            referencedRelation: 'cards'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      cards_scores: {
+        Row: {
+          id: string | null
+          rewards_program: Database['public']['Enums']['rewards_program'] | null
+          score: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'bonus_points_card_id_fkey'
+            columns: ['id']
+            referencedRelation: 'cards'
+            referencedColumns: ['id']
+          }
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
     }
     Enums: {
-      rewards_program: "QANTAS" | "VELOCITY"
+      rewards_program: 'QANTAS' | 'VELOCITY'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -202,10 +249,10 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "buckets_owner_fkey"
-            columns: ["owner"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: 'buckets_owner_fkey'
+            columns: ['owner']
+            referencedRelation: 'users'
+            referencedColumns: ['id']
           }
         ]
       }
@@ -269,10 +316,10 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "objects_bucketId_fkey"
-            columns: ["bucket_id"]
-            referencedRelation: "buckets"
-            referencedColumns: ["id"]
+            foreignKeyName: 'objects_bucketId_fkey'
+            columns: ['bucket_id']
+            referencedRelation: 'buckets'
+            referencedColumns: ['id']
           }
         ]
       }
@@ -344,4 +391,3 @@ export interface Database {
     }
   }
 }
-

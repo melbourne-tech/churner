@@ -18,7 +18,7 @@ const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
     >
       <Header />
 
-      <main className="flex-1 max-w-xl w-full mx-auto bg-white shadow-lg overflow-hidden pb-16 sm:pb-20 lg:pb-24">
+      <main className="flex-1 max-w-xl w-full mx-auto bg-white shadow-lg overflow-x-hidden pb-16 sm:pb-20 lg:pb-24">
         {children}
       </main>
 

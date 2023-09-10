@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from '../ui/Button'
+import SignIn from '../SignIn'
 
 const Header = () => {
   return (
@@ -9,14 +10,16 @@ const Header = () => {
           <Link href="/">Credit Card Churner Australia</Link>
         </h1>
 
-        <Button
+        {/* <SignIn /> */}
+
+        {/* <Button
           variant="ghost"
           // onClick={() => signOut()}
           // isLoading={isLoading}
           // disabled={isLoading}
         >
           Sign Out
-        </Button>
+        </Button> */}
       </div>
     </header>
   )

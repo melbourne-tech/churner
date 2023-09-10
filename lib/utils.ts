@@ -20,3 +20,13 @@ export function progressColorPair(number: number): [string, string] {
     return ['#22c55e', '#16a34a']
   }
 }
+
+const AUDollar = new Intl.NumberFormat('en-AU', {
+  style: 'currency',
+  currency: 'AUD',
+  maximumFractionDigits: 0,
+})
+
+export function formatAUDollars(number: number) {
+  return AUDollar.format(number)
+}

@@ -1,7 +1,9 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import { progressColorPair } from '~/lib/utils'
+import { RewardsProgram } from '~/gql/graphql'
+import { formatAUDollars, progressColorPair } from '~/lib/utils'
+import CardImage from './CardImage'
 
 export interface CardLinkProps {
   issuerSlug: string
@@ -11,13 +13,10 @@ export interface CardLinkProps {
   score: number
   bonusPoints: number
   yearlyFeeCents: number
+  hasMultipleRewardsPrograms: boolean
+  rewardsProgram: RewardsProgram
+  imagePath?: string
 }
-
-const AUDollar = new Intl.NumberFormat('en-AU', {
-  style: 'currency',
-  currency: 'AUD',
-  maximumFractionDigits: 0,
-})
 
 const CardLink = ({
   issuerSlug,
@@ -27,13 +26,18 @@ const CardLink = ({
   score,
   bonusPoints,
   yearlyFeeCents,
+  hasMultipleRewardsPrograms,
+  rewardsProgram,
+  imagePath,
 }: CardLinkProps) => {
   const [pathColor, textColor] = progressColorPair(score / 100)
 
   return (
     <Link
-      href={`/${issuerSlug}/${cardSlug}`}
-      className="flex items-center gap-3 px-3 py-4"
+      href={`/${issuerSlug}/${cardSlug}${
+        hasMultipleRewardsPrograms ? `?program=${rewardsProgram}` : ''
+      }`}
+      className="flex items-center gap-3 px-4 py-4"
     >
       <div className="h-16 w-16">
         <CircularProgressbar
@@ -55,11 +59,22 @@ const CardLink = ({
           <strong className="font-semibold">
             {bonusPoints.toLocaleString()}
           </strong>{' '}
-          Bonus Points &bull; {AUDollar.format(yearlyFeeCents / 100)}
+          Bonus Points &bull; {formatAUDollars(yearlyFeeCents / 100)}
         </span>
       </div>
 
-      <div>
+      <div className="flex items-center gap-4">
+        {imagePath && (
+          <div className="w-24 hidden sm:block">
+            <CardImage
+              imagePath={imagePath}
+              issuerName={issuerName}
+              cardName={cardName}
+              variant="small"
+            />
+          </div>
+        )}
+
         <ArrowRight className="h-6 w-6" />
       </div>
     </Link>

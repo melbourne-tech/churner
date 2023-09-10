@@ -72,6 +72,7 @@ export type BonusPoints = Node & {
   rewardsProgram: RewardsProgram;
   timeFrameDays: Scalars['Int']['output'];
   updatedAt: Scalars['Datetime']['output'];
+  yearlyFeeCents: Scalars['BigInt']['output'];
 };
 
 export type BonusPointsConnection = {
@@ -105,6 +106,7 @@ export type BonusPointsFilter = {
   rewardsProgram?: InputMaybe<RewardsProgramFilter>;
   timeFrameDays?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
+  yearlyFeeCents?: InputMaybe<BigIntFilter>;
 };
 
 export type BonusPointsInsertInput = {
@@ -116,6 +118,7 @@ export type BonusPointsInsertInput = {
   rewardsProgram?: InputMaybe<RewardsProgram>;
   timeFrameDays?: InputMaybe<Scalars['Int']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  yearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
 };
 
 export type BonusPointsInsertResponse = {
@@ -136,6 +139,117 @@ export type BonusPointsOrderBy = {
   rewardsProgram?: InputMaybe<OrderByDirection>;
   timeFrameDays?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
+  yearlyFeeCents?: InputMaybe<OrderByDirection>;
+};
+
+export type BonusPointsStats = Node & {
+  __typename?: 'BonusPointsStats';
+  maxAmount?: Maybe<Scalars['Int']['output']>;
+  maxMinimumSpendCents?: Maybe<Scalars['BigInt']['output']>;
+  maxMinimumSpendPerDayCents?: Maybe<Scalars['Float']['output']>;
+  maxTimeFrameDays?: Maybe<Scalars['Int']['output']>;
+  maxYearlyFeeCents?: Maybe<Scalars['BigInt']['output']>;
+  minAmount?: Maybe<Scalars['Int']['output']>;
+  minMinimumSpendCents?: Maybe<Scalars['BigInt']['output']>;
+  minMinimumSpendPerDayCents?: Maybe<Scalars['Float']['output']>;
+  minTimeFrameDays?: Maybe<Scalars['Int']['output']>;
+  minYearlyFeeCents?: Maybe<Scalars['BigInt']['output']>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  rewardsProgram?: Maybe<RewardsProgram>;
+};
+
+export type BonusPointsStatsConnection = {
+  __typename?: 'BonusPointsStatsConnection';
+  edges: Array<BonusPointsStatsEdge>;
+  pageInfo: PageInfo;
+};
+
+export type BonusPointsStatsDeleteResponse = {
+  __typename?: 'BonusPointsStatsDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<BonusPointsStats>;
+};
+
+export type BonusPointsStatsEdge = {
+  __typename?: 'BonusPointsStatsEdge';
+  cursor: Scalars['String']['output'];
+  node: BonusPointsStats;
+};
+
+export type BonusPointsStatsFilter = {
+  maxAmount?: InputMaybe<IntFilter>;
+  maxMinimumSpendCents?: InputMaybe<BigIntFilter>;
+  maxMinimumSpendPerDayCents?: InputMaybe<FloatFilter>;
+  maxTimeFrameDays?: InputMaybe<IntFilter>;
+  maxYearlyFeeCents?: InputMaybe<BigIntFilter>;
+  minAmount?: InputMaybe<IntFilter>;
+  minMinimumSpendCents?: InputMaybe<BigIntFilter>;
+  minMinimumSpendPerDayCents?: InputMaybe<FloatFilter>;
+  minTimeFrameDays?: InputMaybe<IntFilter>;
+  minYearlyFeeCents?: InputMaybe<BigIntFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  rewardsProgram?: InputMaybe<RewardsProgramFilter>;
+};
+
+export type BonusPointsStatsInsertInput = {
+  maxAmount?: InputMaybe<Scalars['Int']['input']>;
+  maxMinimumSpendCents?: InputMaybe<Scalars['BigInt']['input']>;
+  maxMinimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
+  maxTimeFrameDays?: InputMaybe<Scalars['Int']['input']>;
+  maxYearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
+  minAmount?: InputMaybe<Scalars['Int']['input']>;
+  minMinimumSpendCents?: InputMaybe<Scalars['BigInt']['input']>;
+  minMinimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
+  minTimeFrameDays?: InputMaybe<Scalars['Int']['input']>;
+  minYearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardsProgram?: InputMaybe<RewardsProgram>;
+};
+
+export type BonusPointsStatsInsertResponse = {
+  __typename?: 'BonusPointsStatsInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<BonusPointsStats>;
+};
+
+export type BonusPointsStatsOrderBy = {
+  maxAmount?: InputMaybe<OrderByDirection>;
+  maxMinimumSpendCents?: InputMaybe<OrderByDirection>;
+  maxMinimumSpendPerDayCents?: InputMaybe<OrderByDirection>;
+  maxTimeFrameDays?: InputMaybe<OrderByDirection>;
+  maxYearlyFeeCents?: InputMaybe<OrderByDirection>;
+  minAmount?: InputMaybe<OrderByDirection>;
+  minMinimumSpendCents?: InputMaybe<OrderByDirection>;
+  minMinimumSpendPerDayCents?: InputMaybe<OrderByDirection>;
+  minTimeFrameDays?: InputMaybe<OrderByDirection>;
+  minYearlyFeeCents?: InputMaybe<OrderByDirection>;
+  rewardsProgram?: InputMaybe<OrderByDirection>;
+};
+
+export type BonusPointsStatsUpdateInput = {
+  maxAmount?: InputMaybe<Scalars['Int']['input']>;
+  maxMinimumSpendCents?: InputMaybe<Scalars['BigInt']['input']>;
+  maxMinimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
+  maxTimeFrameDays?: InputMaybe<Scalars['Int']['input']>;
+  maxYearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
+  minAmount?: InputMaybe<Scalars['Int']['input']>;
+  minMinimumSpendCents?: InputMaybe<Scalars['BigInt']['input']>;
+  minMinimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
+  minTimeFrameDays?: InputMaybe<Scalars['Int']['input']>;
+  minYearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
+  rewardsProgram?: InputMaybe<RewardsProgram>;
+};
+
+export type BonusPointsStatsUpdateResponse = {
+  __typename?: 'BonusPointsStatsUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<BonusPointsStats>;
 };
 
 export type BonusPointsUpdateInput = {
@@ -147,6 +261,7 @@ export type BonusPointsUpdateInput = {
   rewardsProgram?: InputMaybe<RewardsProgram>;
   timeFrameDays?: InputMaybe<Scalars['Int']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  yearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
 };
 
 export type BonusPointsUpdateResponse = {
@@ -166,6 +281,8 @@ export type BooleanFilter = {
 export type Cards = Node & {
   __typename?: 'Cards';
   bonusPointsCollection?: Maybe<BonusPointsConnection>;
+  cardScoresCollection: CardsScoresConnection;
+  cardsNormalizedStatsCollection: CardsNormalizedStatsConnection;
   createdAt: Scalars['Datetime']['output'];
   id: Scalars['UUID']['output'];
   imagePath?: Maybe<Scalars['String']['output']>;
@@ -174,13 +291,10 @@ export type Cards = Node & {
   name: Scalars['String']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
-  normalizedStatsCollection: CardsNormalizedStatsConnection;
   pointsPerDollar: Scalars['BigFloat']['output'];
-  scoresCollection: CardsScoresConnection;
   slug: Scalars['Opaque']['output'];
   updatedAt: Scalars['Datetime']['output'];
   url?: Maybe<Scalars['String']['output']>;
-  yearlyFeeCents: Scalars['BigInt']['output'];
 };
 
 
@@ -194,23 +308,23 @@ export type CardsBonusPointsCollectionArgs = {
 };
 
 
-export type CardsNormalizedStatsCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<CardsNormalizedStatsFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CardsNormalizedStatsOrderBy>>;
-};
-
-
-export type CardsScoresCollectionArgs = {
+export type CardsCardScoresCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   filter?: InputMaybe<CardsScoresFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CardsScoresOrderBy>>;
+};
+
+
+export type CardsCardsNormalizedStatsCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<CardsNormalizedStatsFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CardsNormalizedStatsOrderBy>>;
 };
 
 export type CardsConnection = {
@@ -244,7 +358,6 @@ export type CardsFilter = {
   slug?: InputMaybe<OpaqueFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
   url?: InputMaybe<StringFilter>;
-  yearlyFeeCents?: InputMaybe<BigIntFilter>;
 };
 
 export type CardsInsertInput = {
@@ -257,7 +370,6 @@ export type CardsInsertInput = {
   slug?: InputMaybe<Scalars['Opaque']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
-  yearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
 };
 
 export type CardsInsertResponse = {
@@ -277,7 +389,6 @@ export type CardsNormalizedStats = Node & {
   minimumSpendPerDayCents?: Maybe<Scalars['Float']['output']>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
-  pointsPerDollar?: Maybe<Scalars['Float']['output']>;
   rewardsProgram?: Maybe<RewardsProgram>;
   timeFrameDays?: Maybe<Scalars['Float']['output']>;
   yearlyFeeCents?: Maybe<Scalars['Float']['output']>;
@@ -309,7 +420,6 @@ export type CardsNormalizedStatsFilter = {
   minimumSpendCents?: InputMaybe<FloatFilter>;
   minimumSpendPerDayCents?: InputMaybe<FloatFilter>;
   nodeId?: InputMaybe<IdFilter>;
-  pointsPerDollar?: InputMaybe<FloatFilter>;
   rewardsProgram?: InputMaybe<RewardsProgramFilter>;
   timeFrameDays?: InputMaybe<FloatFilter>;
   yearlyFeeCents?: InputMaybe<FloatFilter>;
@@ -320,7 +430,6 @@ export type CardsNormalizedStatsInsertInput = {
   id?: InputMaybe<Scalars['UUID']['input']>;
   minimumSpendCents?: InputMaybe<Scalars['Float']['input']>;
   minimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
-  pointsPerDollar?: InputMaybe<Scalars['Float']['input']>;
   rewardsProgram?: InputMaybe<RewardsProgram>;
   timeFrameDays?: InputMaybe<Scalars['Float']['input']>;
   yearlyFeeCents?: InputMaybe<Scalars['Float']['input']>;
@@ -339,7 +448,6 @@ export type CardsNormalizedStatsOrderBy = {
   id?: InputMaybe<OrderByDirection>;
   minimumSpendCents?: InputMaybe<OrderByDirection>;
   minimumSpendPerDayCents?: InputMaybe<OrderByDirection>;
-  pointsPerDollar?: InputMaybe<OrderByDirection>;
   rewardsProgram?: InputMaybe<OrderByDirection>;
   timeFrameDays?: InputMaybe<OrderByDirection>;
   yearlyFeeCents?: InputMaybe<OrderByDirection>;
@@ -350,7 +458,6 @@ export type CardsNormalizedStatsUpdateInput = {
   id?: InputMaybe<Scalars['UUID']['input']>;
   minimumSpendCents?: InputMaybe<Scalars['Float']['input']>;
   minimumSpendPerDayCents?: InputMaybe<Scalars['Float']['input']>;
-  pointsPerDollar?: InputMaybe<Scalars['Float']['input']>;
   rewardsProgram?: InputMaybe<RewardsProgram>;
   timeFrameDays?: InputMaybe<Scalars['Float']['input']>;
   yearlyFeeCents?: InputMaybe<Scalars['Float']['input']>;
@@ -374,7 +481,6 @@ export type CardsOrderBy = {
   slug?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
   url?: InputMaybe<OrderByDirection>;
-  yearlyFeeCents?: InputMaybe<OrderByDirection>;
 };
 
 export type CardsScores = Node & {
@@ -458,7 +564,6 @@ export type CardsUpdateInput = {
   slug?: InputMaybe<Scalars['Opaque']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
-  yearlyFeeCents?: InputMaybe<Scalars['BigInt']['input']>;
 };
 
 export type CardsUpdateResponse = {
@@ -628,6 +733,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Deletes zero or more records from the `BonusPoints` collection */
   deleteFromBonusPointsCollection: BonusPointsDeleteResponse;
+  /** Deletes zero or more records from the `BonusPointsStats` collection */
+  deleteFromBonusPointsStatsCollection: BonusPointsStatsDeleteResponse;
   /** Deletes zero or more records from the `Cards` collection */
   deleteFromCardsCollection: CardsDeleteResponse;
   /** Deletes zero or more records from the `CardsNormalizedStats` collection */
@@ -638,6 +745,8 @@ export type Mutation = {
   deleteFromIssuersCollection: IssuersDeleteResponse;
   /** Adds one or more `BonusPoints` records to the collection */
   insertIntoBonusPointsCollection?: Maybe<BonusPointsInsertResponse>;
+  /** Adds one or more `BonusPointsStats` records to the collection */
+  insertIntoBonusPointsStatsCollection?: Maybe<BonusPointsStatsInsertResponse>;
   /** Adds one or more `Cards` records to the collection */
   insertIntoCardsCollection?: Maybe<CardsInsertResponse>;
   /** Adds one or more `CardsNormalizedStats` records to the collection */
@@ -648,6 +757,8 @@ export type Mutation = {
   insertIntoIssuersCollection?: Maybe<IssuersInsertResponse>;
   /** Updates zero or more records in the `BonusPoints` collection */
   updateBonusPointsCollection: BonusPointsUpdateResponse;
+  /** Updates zero or more records in the `BonusPointsStats` collection */
+  updateBonusPointsStatsCollection: BonusPointsStatsUpdateResponse;
   /** Updates zero or more records in the `Cards` collection */
   updateCardsCollection: CardsUpdateResponse;
   /** Updates zero or more records in the `CardsNormalizedStats` collection */
@@ -663,6 +774,13 @@ export type Mutation = {
 export type MutationDeleteFromBonusPointsCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<BonusPointsFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromBonusPointsStatsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<BonusPointsStatsFilter>;
 };
 
 
@@ -701,6 +819,12 @@ export type MutationInsertIntoBonusPointsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationInsertIntoBonusPointsStatsCollectionArgs = {
+  objects: Array<BonusPointsStatsInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntoCardsCollectionArgs = {
   objects: Array<CardsInsertInput>;
 };
@@ -729,6 +853,14 @@ export type MutationUpdateBonusPointsCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<BonusPointsFilter>;
   set: BonusPointsUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateBonusPointsStatsCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<BonusPointsStatsFilter>;
+  set: BonusPointsStatsUpdateInput;
 };
 
 
@@ -799,6 +931,8 @@ export type Query = {
   __typename?: 'Query';
   /** A pagable collection of type `BonusPoints` */
   bonusPointsCollection?: Maybe<BonusPointsConnection>;
+  /** A pagable collection of type `BonusPointsStats` */
+  bonusPointsStatsCollection?: Maybe<BonusPointsStatsConnection>;
   /** A pagable collection of type `Cards` */
   cardsCollection?: Maybe<CardsConnection>;
   /** A pagable collection of type `CardsNormalizedStats` */
@@ -820,6 +954,17 @@ export type QueryBonusPointsCollectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<BonusPointsOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryBonusPointsStatsCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<BonusPointsStatsFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<BonusPointsStatsOrderBy>>;
 };
 
 
@@ -922,10 +1067,19 @@ export type UuidFilter = {
   neq?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+export type CardQueryQueryVariables = Exact<{
+  issuerId: Scalars['UUID']['input'];
+  slug: Scalars['Opaque']['input'];
+}>;
+
+
+export type CardQueryQuery = { __typename?: 'Query', cardsCollection?: { __typename?: 'CardsConnection', edges: Array<{ __typename?: 'CardsEdge', node: { __typename?: 'Cards', id: string, updatedAt: string, slug: any, name: string, url?: string | null, imagePath?: string | null, issuer: { __typename?: 'Issuers', id: string, slug: any, name: string, url?: string | null }, bonusPoints?: { __typename?: 'BonusPointsConnection', edges: Array<{ __typename?: 'BonusPointsEdge', node: { __typename?: 'BonusPoints', id: string, rewardsProgram: RewardsProgram, amount: number, minimumSpendCents: string, timeFrameDays: number, yearlyFeeCents: string } }> } | null } }> } | null, bonusPointsStatsCollection?: { __typename?: 'BonusPointsStatsConnection', edges: Array<{ __typename?: 'BonusPointsStatsEdge', node: { __typename?: 'BonusPointsStats', rewardsProgram?: RewardsProgram | null, minAmount?: number | null, maxAmount?: number | null, minMinimumSpendCents?: string | null, maxMinimumSpendCents?: string | null, minYearlyFeeCents?: string | null, maxYearlyFeeCents?: string | null, minTimeFrameDays?: number | null, maxTimeFrameDays?: number | null } }> } | null };
+
 export type CardsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CardsQueryQuery = { __typename?: 'Query', cards?: { __typename?: 'CardsConnection', edges: Array<{ __typename?: 'CardsEdge', node: { __typename?: 'Cards', id: string, updatedAt: string, slug: any, name: string, imagePath?: string | null, yearlyFeeCents: string, bonusPoints?: { __typename?: 'BonusPointsConnection', edges: Array<{ __typename?: 'BonusPointsEdge', node: { __typename?: 'BonusPoints', id: string, updatedAt: string, rewardsProgram: RewardsProgram, amount: number } }> } | null, scores: { __typename?: 'CardsScoresConnection', edges: Array<{ __typename?: 'CardsScoresEdge', node: { __typename?: 'CardsScores', rewardsProgram?: RewardsProgram | null, score?: number | null } }> }, issuer: { __typename?: 'Issuers', id: string, slug: any, name: string } } }> } | null };
+export type CardsQueryQuery = { __typename?: 'Query', cards?: { __typename?: 'CardsConnection', edges: Array<{ __typename?: 'CardsEdge', node: { __typename?: 'Cards', id: string, updatedAt: string, slug: any, name: string, imagePath?: string | null, bonusPoints?: { __typename?: 'BonusPointsConnection', edges: Array<{ __typename?: 'BonusPointsEdge', node: { __typename?: 'BonusPoints', id: string, updatedAt: string, rewardsProgram: RewardsProgram, amount: number, yearlyFeeCents: string } }> } | null, scores: { __typename?: 'CardsScoresConnection', edges: Array<{ __typename?: 'CardsScoresEdge', node: { __typename?: 'CardsScores', rewardsProgram?: RewardsProgram | null, score?: number | null } }> }, issuer: { __typename?: 'Issuers', id: string, slug: any, name: string } } }> } | null };
 
 
-export const CardsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CardsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"cards"},"name":{"kind":"Name","value":"cardsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","name":{"kind":"Name","value":"yearlyFeeCents"}},{"kind":"Field","alias":{"kind":"Name","value":"bonusPoints"},"name":{"kind":"Name","value":"bonusPointsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"scores"},"name":{"kind":"Name","value":"scoresCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"score"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"issuer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CardsQueryQuery, CardsQueryQueryVariables>;
+export const CardQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CardQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"issuerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Opaque"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"issuerId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"issuerId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","name":{"kind":"Name","value":"issuer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"bonusPoints"},"name":{"kind":"Name","value":"bonusPointsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"rewardsProgram"},"value":{"kind":"EnumValue","value":"AscNullsLast"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"minimumSpendCents"}},{"kind":"Field","name":{"kind":"Name","value":"timeFrameDays"}},{"kind":"Field","name":{"kind":"Name","value":"yearlyFeeCents"}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"bonusPointsStatsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"minAmount"}},{"kind":"Field","name":{"kind":"Name","value":"maxAmount"}},{"kind":"Field","name":{"kind":"Name","value":"minMinimumSpendCents"}},{"kind":"Field","name":{"kind":"Name","value":"maxMinimumSpendCents"}},{"kind":"Field","name":{"kind":"Name","value":"minYearlyFeeCents"}},{"kind":"Field","name":{"kind":"Name","value":"maxYearlyFeeCents"}},{"kind":"Field","name":{"kind":"Name","value":"minTimeFrameDays"}},{"kind":"Field","name":{"kind":"Name","value":"maxTimeFrameDays"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CardQueryQuery, CardQueryQueryVariables>;
+export const CardsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CardsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"cards"},"name":{"kind":"Name","value":"cardsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","alias":{"kind":"Name","value":"bonusPoints"},"name":{"kind":"Name","value":"bonusPointsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"yearlyFeeCents"}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"scores"},"name":{"kind":"Name","value":"cardScoresCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rewardsProgram"}},{"kind":"Field","name":{"kind":"Name","value":"score"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"issuer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CardsQueryQuery, CardsQueryQueryVariables>;

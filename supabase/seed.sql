@@ -51,7 +51,6 @@ insert into
 		"name",
 		"url",
 		"image_path",
-		"yearly_fee_cents",
 		"points_per_dollar"
 	)
 values
@@ -64,8 +63,7 @@ values
 		'Amplify Qantas Signature',
 		'https://www.bankofmelbourne.com.au/personal/credit-cards/frequent-flyer/amplify-signature',
 		null,
-		37000,
-		0.75
+		0.750
 	),
 	(
 		'3ac46969-c5ec-4091-9739-9f9898b919a2',
@@ -76,20 +74,7 @@ values
 		'Frequent Flyer Platinum',
 		'https://www.anz.com.au/personal/credit-cards/frequent-flyer/platinum/',
 		null,
-		19500,
-		0.75
-	),
-	(
-		'61a0dc3c-8a68-47ba-aefa-1a3c9c500ce8',
-		'2023-08-27 06:15:58.545964+00',
-		'2023-08-27 06:15:58.545964+00',
-		'51a2dfe6-0a69-48fb-a476-c801e001ac64',
-		'platinum',
-		'Platinum Card',
-		'https://www.americanexpress.com/au/credit-cards/the-platinum-card/',
-		null,
-		145000,
-		1.125
+		0.750
 	),
 	(
 		'a21a4ac5-7112-4ee8-9f3c-30608c072cb0',
@@ -100,8 +85,7 @@ values
 		'Frequent Flyer Black',
 		'https://www.anz.com.au/personal/credit-cards/frequent-flyer/black/',
 		null,
-		32500,
-		1.00
+		1.000
 	),
 	(
 		'c40a5c57-2f96-46d9-9f92-6408ed2d0e50',
@@ -112,7 +96,6 @@ values
 		'Rewards Signature Card with Velocity',
 		'https://www.nab.com.au/personal/credit-cards/nab-rewards-cards/velocity-points',
 		null,
-		19500,
 		0.625
 	),
 	(
@@ -124,8 +107,18 @@ values
 		'Rewards Platinum Card with Velocity',
 		'https://www.nab.com.au/personal/credit-cards/nab-rewards-cards/velocity-points',
 		null,
-		9500,
-		0.50
+		0.500
+	),
+	(
+		'61a0dc3c-8a68-47ba-aefa-1a3c9c500ce8',
+		'2023-08-27 06:15:58.545964+00',
+		'2023-08-31 07:32:59.555274+00',
+		'51a2dfe6-0a69-48fb-a476-c801e001ac64',
+		'platinum',
+		'Platinum Card',
+		'https://churner.au/amex-platinum',
+		null,
+		1.125
 	);
 
 insert into
@@ -137,66 +130,84 @@ insert into
 		"rewards_program",
 		"amount",
 		"minimum_spend_cents",
-		"time_frame_days"
+		"time_frame_days",
+		"yearly_fee_cents"
 	)
 values
 	(
 		'e4e8a7aa-ddf6-4293-aa06-26be49b34dc9',
 		'2023-08-22 13:48:29.255727+00',
-		'2023-08-22 13:48:29.255727+00',
+		'2023-09-09 07:19:49.114892+00',
 		'e5a0d8a0-89ce-499d-9a15-6a18d7599582',
 		'QANTAS',
 		90000,
 		600000,
-		90
+		90,
+		37000
 	),
 	(
 		'83235792-8b0c-463a-8ca1-b98740857fea',
 		'2023-08-27 04:43:36.552707+00',
-		'2023-08-27 04:43:36.552707+00',
+		'2023-09-09 07:19:49.114892+00',
 		'a21a4ac5-7112-4ee8-9f3c-30608c072cb0',
 		'QANTAS',
 		110000,
 		500000,
-		90
+		90,
+		32500
 	),
 	(
 		'0d0c3d88-ba88-4ed4-b4d9-15a9a2c90ae9',
 		'2023-08-27 04:46:44.613593+00',
-		'2023-08-27 04:46:44.613593+00',
+		'2023-09-09 07:19:49.114892+00',
 		'3ac46969-c5ec-4091-9739-9f9898b919a2',
 		'QANTAS',
 		75000,
 		250000,
-		90
+		90,
+		19500
 	),
 	(
 		'4732df66-7b8d-4958-9039-f0ed35d21b7f',
 		'2023-08-27 06:17:32+00',
-		'2023-08-27 06:19:10.206163+00',
+		'2023-09-09 07:19:49.114892+00',
 		'61a0dc3c-8a68-47ba-aefa-1a3c9c500ce8',
 		'VELOCITY',
 		75000,
 		500000,
-		90
+		90,
+		145000
 	),
 	(
 		'4f4b433b-1087-4814-8c5b-70b65a9d8598',
 		'2023-08-27 06:24:22.905376+00',
-		'2023-08-27 06:24:22.905376+00',
+		'2023-09-09 07:19:49.114892+00',
 		'c40a5c57-2f96-46d9-9f92-6408ed2d0e50',
 		'VELOCITY',
 		80000,
 		300000,
-		60
+		60,
+		19500
 	),
 	(
 		'1a81cac6-1bcd-4278-91e7-5f36632f9d78',
 		'2023-08-27 06:28:16.11389+00',
-		'2023-08-27 06:28:16.11389+00',
+		'2023-09-09 07:19:49.114892+00',
 		'eeea8933-9443-4e47-bb43-4b2a9a76d718',
 		'VELOCITY',
 		60000,
 		100000,
-		60
+		60,
+		9500
+	),
+	(
+		'4598a770-bbf0-44fb-b446-b1e9442b2a9a',
+		'2023-08-29 14:31:50.473363+00',
+		'2023-09-09 07:19:49.114892+00',
+		'61a0dc3c-8a68-47ba-aefa-1a3c9c500ce8',
+		'QANTAS',
+		75000,
+		500000,
+		90,
+		145000
 	);

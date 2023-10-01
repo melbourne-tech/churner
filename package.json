@@ -19,6 +19,7 @@
     "@supabase/supabase-js": "^2.33.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "fathom-client": "^3.5.0",
     "graphql": "^16.8.0",
     "graphql-request": "^6.1.0",
     "lucide-react": "^0.270.0",

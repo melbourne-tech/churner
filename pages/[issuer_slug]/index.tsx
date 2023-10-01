@@ -3,6 +3,7 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
+import { NextSeo } from 'next-seo'
 import { useMemo } from 'react'
 import CardLink from '~/components/CardLink'
 import RewardsProgramPicker from '~/components/RewardsProgramPicker'
@@ -146,6 +147,8 @@ const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
 
   return (
     <>
+      <NextSeo title={`Compare Credit Cards from ${issuer.name}`} />
+
       <div className="m-4 flex flex-col gap-6">
         <h1 className="text-2xl text-center font-bold">{issuer.name}</h1>
       </div>

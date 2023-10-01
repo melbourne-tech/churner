@@ -5,6 +5,7 @@ import {
   InferGetStaticPropsType,
 } from 'next'
 import { NextSeo } from 'next-seo'
+import Link from 'next/link'
 import CardImage from '~/components/CardImage'
 import RewardsProgramPicker from '~/components/RewardsProgramPicker'
 import ScoreBar from '~/components/ScoreBar'
@@ -149,7 +150,12 @@ const CardPage: NextPageWithLayout<CardPageProps> = ({
       <div className="m-4 flex flex-col">
         <div className="flex flex-col gap-8">
           <div>
-            <h2 className="text-xl font-semibold">{card.issuer.name}</h2>
+            <Link
+              href={`/${card.issuer.slug}`}
+              className="text-xl font-semibold"
+            >
+              {card.issuer.name}
+            </Link>
             <h1 className="text-3xl font-bold">{card.name}</h1>
           </div>
 

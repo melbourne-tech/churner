@@ -1,20 +1,21 @@
-import { Plus } from 'lucide-react'
-import { InferGetStaticPropsType } from 'next'
-import Link from 'next/link'
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from 'next'
 import { useMemo } from 'react'
 import CardLink from '~/components/CardLink'
 import RewardsProgramPicker from '~/components/RewardsProgramPicker'
 import Layout from '~/components/layout/Layout'
-import { Button } from '~/components/ui/Button'
 import { graphql } from '~/gql'
 import { RewardsProgram } from '~/gql/graphql'
 import { useUrlState } from '~/lib/router'
-import { adminGraphQLClient } from '~/lib/supabase-admin'
+import supabaseAdmin, { adminGraphQLClient } from '~/lib/supabase-admin'
 import { NextPageWithLayout } from '~/lib/types'
 
 const query = graphql(/* GraphQL */ `
-  query CardsQuery {
-    cards: cardsCollection {
+  query IssuerCardsQuery($issuerId: UUID!) {
+    cards: cardsCollection(filter: { issuerId: { eq: $issuerId } }) {
       edges {
         node {
           id
@@ -52,12 +53,36 @@ const query = graphql(/* GraphQL */ `
   }
 `)
 
-export const getStaticProps = async () => {
-  const data = await adminGraphQLClient.request(query)
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data, error } = await supabaseAdmin.from('issuers').select('slug')
+  if (error) throw error
+
+  return {
+    paths: data.map(({ slug }) => ({
+      params: {
+        issuer_slug: slug,
+      },
+    })),
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  const { data: issuerData } = await supabaseAdmin
+    .from('issuers')
+    .select('id,name')
+    .eq('slug', params?.issuer_slug)
+    .maybeSingle()
+  if (!issuerData) return { notFound: true }
+
+  const data = await adminGraphQLClient.request(query, {
+    issuerId: issuerData.id,
+  })
   if (!data.cards) throw new Error('Failed to fetch data from Supabase')
 
   return {
     props: {
+      issuer: issuerData,
       cards: data.cards.edges.map(({ node }) => ({
         ...node,
         bonusPoints: node.bonusPoints?.edges.map(({ node }) => node) ?? [],
@@ -68,14 +93,26 @@ export const getStaticProps = async () => {
   }
 }
 
-interface HomePageProps
+interface IssuerPageProps
   extends InferGetStaticPropsType<typeof getStaticProps> {}
 
-const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
+const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
+  issuer,
+  cards: allCards,
+}) => {
+  const availableRewardsPrograms = Array.from(
+    new Set(
+      allCards.flatMap((card) =>
+        card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram)
+      )
+    )
+  )
+  const hasMultipleRewardsPrograms = availableRewardsPrograms.length > 1
+
   const [rewardsProgram, setRewardsProgram] = useUrlState<RewardsProgram>(
     'program',
-    RewardsProgram.Qantas,
-    [RewardsProgram.Qantas, RewardsProgram.Velocity]
+    availableRewardsPrograms[0],
+    availableRewardsPrograms
   )
 
   const cards = useMemo(
@@ -110,49 +147,16 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
   return (
     <>
       <div className="m-4 flex flex-col gap-6">
-        <h1 className="text-2xl text-center font-bold">
-          Compare Credit Card Welcome Bonuses
-        </h1>
-
-        <p>
-          We rank cards by calculating a score based on the number of bonus
-          points, annual fee, minimum spend, and the minimum spend period in
-          relation to all the other cards.
-          <br />
-          Please note that scores may change as offers are updated, and new
-          cards join the list.
-          <br />
-          <Link
-            href="/faq"
-            className="text-blue-600 hover:underline hover:text-blue-500 transition-colors"
-          >
-            Learn more about how we input the card details.
-          </Link>
-        </p>
-
-        <Button variant="secondary" asChild>
-          <a
-            href={`mailto:hello@churner.com.au?subject=${encodeURIComponent(
-              `Request a New Card`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="self-start"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Request a New Card</span>
-          </a>
-        </Button>
+        <h1 className="text-2xl text-center font-bold">{issuer.name}</h1>
       </div>
-
-      <hr />
-
-      <div className="m-4">
-        <RewardsProgramPicker
-          rewardsProgram={rewardsProgram}
-          setRewardsProgram={setRewardsProgram}
-        />
-      </div>
+      {hasMultipleRewardsPrograms && (
+        <div className="m-4">
+          <RewardsProgramPicker
+            rewardsProgram={rewardsProgram}
+            setRewardsProgram={setRewardsProgram}
+          />
+        </div>
+      )}
 
       <ul className="flex flex-col divide-y">
         {cards.map((card) => {
@@ -191,6 +195,6 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
   )
 }
 
-Home.getLayout = (page) => <Layout>{page}</Layout>
+IssuerPage.getLayout = (page) => <Layout>{page}</Layout>
 
-export default Home
+export default IssuerPage

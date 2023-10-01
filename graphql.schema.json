@@ -2664,22 +2664,6 @@
             "deprecationReason": null
           },
           {
-            "name": "pointsPerDollar",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "BigFloat",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "slug",
             "description": null,
             "args": [],
@@ -2959,18 +2943,6 @@
             "deprecationReason": null
           },
           {
-            "name": "pointsPerDollar",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "BigFloatFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "slug",
             "description": null,
             "type": {
@@ -3071,18 +3043,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "pointsPerDollar",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "BigFloat",
               "ofType": null
             },
             "defaultValue": null,
@@ -4016,18 +3976,6 @@
             "deprecationReason": null
           },
           {
-            "name": "pointsPerDollar",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "OrderByDirection",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "slug",
             "description": null,
             "type": {
@@ -4656,18 +4604,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "pointsPerDollar",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "BigFloat",
               "ofType": null
             },
             "defaultValue": null,

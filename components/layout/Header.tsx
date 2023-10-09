@@ -1,8 +1,22 @@
 import Link from 'next/link'
-import { Button } from '../ui/Button'
+import { useEffect, useState } from 'react'
+import supabase from '~/lib/supabase'
 import SignIn from '../SignIn'
+import { Button } from '../ui/Button'
 
 const Header = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false)
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_, session) => {
+      setIsSignedIn(session !== null)
+    })
+
+    return subscription.unsubscribe
+  }, [])
+
   return (
     <header className="border-b bg-white sticky top-0">
       <div className="flex h-16 justify-between items-center px-4">
@@ -13,21 +27,23 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <Link
             href="/faq"
-            className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+            className="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"
           >
             FAQ
           </Link>
 
-          {/* <SignIn /> */}
-
-          {/* <Button
-          variant="ghost"
-          // onClick={() => signOut()}
-          // isLoading={isLoading}
-          // disabled={isLoading}
-          >
-          Sign Out
-        </Button> */}
+          {!isSignedIn ? (
+            <SignIn />
+          ) : (
+            <Button
+              variant="ghost"
+              onClick={() => {
+                supabase.auth.signOut()
+              }}
+            >
+              Sign Out
+            </Button>
+          )}
         </div>
       </div>
     </header>

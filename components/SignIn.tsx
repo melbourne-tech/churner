@@ -1,5 +1,6 @@
-import { Send } from 'lucide-react'
-import { FormEvent } from 'react'
+import { Mail, Send } from 'lucide-react'
+import { FormEvent, useState } from 'react'
+import supabase from '~/lib/supabase'
 import { Button } from './ui/Button'
 import {
   Dialog,
@@ -14,28 +15,47 @@ import { Input } from './ui/Input'
 import { Label } from './ui/Label'
 
 const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
 
-    const formData = new FormData(e.currentTarget)
+    const form = e.currentTarget
+
+    const formData = new FormData(form)
     const email = formData.get('email')?.toString()
-    console.log('email:', email)
+
+    if (!email) return
+
+    supabase.auth
+      .signInWithOtp({
+        email,
+      })
+      .then(() => {
+        form.reset()
+        setSubmitted(true)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost">
-          <span>Sign In</span>
-          <span className="text-gray-500">&bull;</span>
-          <span>Sign Up</span>
+          <Mail className="h-4 w-4" />
+          <span>Register for Updates</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader className="gap-4">
-          <DialogTitle>Sign In or Sign Up</DialogTitle>
+          <DialogTitle>Register for Updates</DialogTitle>
           <DialogDescription>
-            Enter your email address to get a sign in link.
+            Enter your email address and click the link sent to your inbox to
+            receive updates about new credit card offers.
           </DialogDescription>
         </DialogHeader>
 
@@ -58,16 +78,25 @@ const SignIn = () => {
         </form>
 
         <DialogFooter>
-          <Button type="submit" form="sign-in-form">
+          <Button
+            type="submit"
+            form="sign-in-form"
+            isLoading={isLoading}
+            disabled={isLoading}
+          >
             <Send className="h-4 w-4" />
-            <span>Email Link</span>
+            <span>Register</span>
           </Button>
         </DialogFooter>
 
         <div>
+          {submitted && (
+            <p className="text-sm text-green-600">
+              Check your email for a link to confirm your subscription.
+            </p>
+          )}
+
           <span className="text-xs text-gray-500 dark:text-gray-400 leading-none">
-            By signing in you agree to receive occasional emails from us.
-            <br />
             You can unsubscribe at any time.
           </span>
         </div>

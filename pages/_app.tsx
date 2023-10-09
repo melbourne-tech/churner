@@ -19,7 +19,15 @@ const defaultSEOConfig: DefaultSeoProps = {
     type: 'website',
     url: SITE_URL,
     site_name: 'Credit Card Churner Australia',
-    images: [],
+    images: [
+      {
+        url: 'https://www.churner.com.au/og.png',
+        type: 'image/png',
+        width: 1200,
+        height: 630,
+        alt: 'Credit Card Churner Australia Logo',
+      },
+    ],
   },
 }
 

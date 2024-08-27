@@ -76,7 +76,7 @@ const FAQPage: NextPageWithLayout = () => {
         <p>
           Yes! This website is open source, and you can contribute to it on{' '}
           <a
-            href="https://github.com/alaister/churner.com.au"
+            href="https://github.com/melbourne-tech/churner"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline hover:text-blue-500 transition-colors"

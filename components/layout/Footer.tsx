@@ -3,17 +3,17 @@ import { Github, Globe, Mail, Twitter } from 'lucide-react'
 const SOCIAL = [
   {
     name: 'Twitter',
-    href: 'https://twitter.com/alaisteryoung',
+    href: 'https://twitter.com/melb_dot_tech',
     icon: <Twitter className="h-5 w-5" aria-hidden="true" />,
   },
   {
     name: 'GitHub',
-    href: 'https://github.com/alaister/churner.com.au',
+    href: 'https://github.com/melbourne-tech/churner',
     icon: <Github className="h-5 w-5" aria-hidden="true" />,
   },
   {
     name: 'Website',
-    href: 'https://www.alaisteryoung.com/',
+    href: 'https://www.melbournetech.com/',
     icon: <Globe className="h-5 w-5" aria-hidden="true" />,
   },
   {
@@ -44,8 +44,8 @@ const Footer = () => {
       </div>
       <p className="mt-4 text-xs leading-5 text-gray-600 md:order-1 md:mt-0">
         &copy; {CURRENT_YEAR}{' '}
-        <a href="https://www.alaisteryoung.com/" target="_blank">
-          Alaister Young
+        <a href="https://www.melbournetech.com/" target="_blank">
+          Melbourne Tech, LLC
         </a>
         . All rights reserved.
       </p>

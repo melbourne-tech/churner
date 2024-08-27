@@ -106,11 +106,14 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const card = data.cardsCollection?.edges?.[0]?.node
   if (!card) return { notFound: true }
 
+  const bonusPoints = card.bonusPoints?.edges.map(({ node }) => node) ?? []
+  if (bonusPoints.length === 0) return { notFound: true }
+
   return {
     props: {
       card: {
         ...card,
-        bonusPoints: card.bonusPoints?.edges.map(({ node }) => node) ?? [],
+        bonusPoints,
       },
       bonusPointsStats:
         data.bonusPointsStatsCollection?.edges.map(({ node }) => node) ?? [],

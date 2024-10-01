@@ -37,7 +37,7 @@ const BlogPostPage: NextPageWithLayout<
             <div className="m-4 flex items-center gap-1 text-gray-500">
               <InfoIcon size={12} />
               <p className="text-xs">
-                This post contains sponsored content. Contact us for more
+                This post contains affiliate links. Contact us for more
                 information.
               </p>
             </div>

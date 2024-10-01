@@ -24,7 +24,14 @@ const Header = () => {
           <Link href="/">Credit Card Churner Australia</Link>
         </h1>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/posts"
+            className="text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors"
+          >
+            Posts
+          </Link>
+
           <Link
             href="/faq"
             className="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"

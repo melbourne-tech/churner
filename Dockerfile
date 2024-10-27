@@ -4,7 +4,7 @@ FROM node:20-alpine AS base
 
 # --- Dependencies ---
 FROM base AS deps
-RUN apk add --no-cache libc6-compat git
+RUN apk add --no-cache libc6-compat git python3 make g++
 
 WORKDIR /app
 

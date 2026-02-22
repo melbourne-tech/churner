@@ -36,7 +36,7 @@ insert into public.bonus_points_history (
   minimum_spend_cents, time_frame_days, yearly_fee_cents
 )
 select
-  id, created_at, card_id, rewards_program, amount,
+  id, updated_at, card_id, rewards_program, amount,
   minimum_spend_cents, time_frame_days, yearly_fee_cents
 from public.bonus_points;
 

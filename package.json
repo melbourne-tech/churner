@@ -7,8 +7,7 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.0",
@@ -23,8 +22,6 @@
     "clsx": "^2.1.0",
     "common-tags": "^1.8.2",
     "fathom-client": "^3.7.0",
-    "graphql": "^16.12.0",
-    "graphql-request": "^6.1.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.475.0",
     "next": "^15.1.0",
@@ -40,9 +37,6 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/client-preset": "4.1.0",
-    "@graphql-codegen/introspection": "4.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/common-tags": "^1.8.4",
     "@types/node": "^22.0.0",

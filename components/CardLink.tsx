@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import { RewardsProgram } from '~/gql/graphql'
+import { RewardsProgram } from '~/data/types'
 import { formatAUDollars, progressColorPair } from '~/lib/utils'
 import CardImage from './CardImage'
 

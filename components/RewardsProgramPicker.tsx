@@ -1,4 +1,4 @@
-import { RewardsProgram } from '~/gql/graphql'
+import { RewardsProgram } from '~/data/types'
 import { Label } from './ui/Label'
 import {
   Select,

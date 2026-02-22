@@ -7,7 +7,7 @@ import RewardsProgramPicker from '~/components/RewardsProgramPicker'
 import Layout from '~/components/layout/Layout'
 import { Button } from '~/components/ui/Button'
 import { getCards } from '~/data/cards'
-import { RewardsProgram } from '~/gql/graphql'
+import { RewardsProgram } from '~/data/types'
 import { useUrlState } from '~/lib/router'
 import { NextPageWithLayout } from '~/lib/types'
 

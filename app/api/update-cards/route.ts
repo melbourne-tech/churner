@@ -1,16 +1,9 @@
 import { NextResponse } from 'next/server'
 import { start } from 'workflow/api'
-import { updateCardWorkflow } from '~/workflows/update-card'
+import { updateCardsWorkflow } from '~/workflows/update-cards'
 
 export async function GET(request: Request) {
-  const run = await start(updateCardWorkflow, [
-    {
-      id: '1',
-      name: 'Ultimate Awards Credit Card',
-      url: 'https://www.commbank.com.au/credit-cards/ultimate.html',
-      rewardsProgram: 'QANTAS',
-    },
-  ])
+  const run = await start(updateCardsWorkflow, [])
 
   return NextResponse.json({ runId: run.runId })
 }

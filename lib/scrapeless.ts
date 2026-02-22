@@ -25,7 +25,7 @@ export async function scrapeUrl(url: string, waitForTag?: string) {
       },
     },
     proxy: {
-      country: 'AU',
+      country: 'ANY',
     },
   })
 
@@ -33,7 +33,7 @@ export async function scrapeUrl(url: string, waitForTag?: string) {
     throw new Error('Failed to scrape URL: No markdown returned')
   }
 
-  if (markdown.length > 50000) {
+  if (markdown.length > 100000) {
     throw new Error('Failed to scrape URL: Page is too long')
   }
 

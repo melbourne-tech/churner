@@ -142,6 +142,15 @@ export async function getCardByIssuerIdAndSlug(
   }
 }
 
+export async function getCardsWithIssuerUrl() {
+  return sql<{ id: string; name: string; url: string; rewardsProgram: RewardsProgram }[]>`
+    SELECT c.id, c.name, c.card_issuer_url AS url, bp.rewards_program
+    FROM cards c
+    JOIN bonus_points bp ON bp.card_id = c.id
+    WHERE c.card_issuer_url IS NOT NULL
+  `
+}
+
 export async function getCardSlugsWithIssuer() {
   return sql<{ slug: string; issuerSlug: string }[]>`
     SELECT c.slug, i.slug as issuer_slug

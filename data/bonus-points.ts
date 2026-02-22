@@ -1,5 +1,38 @@
 import { sql } from '~/lib/db'
-import { BonusPointsStats } from './types'
+import { BonusPointsStats, RewardsProgram } from './types'
+
+interface InsertBonusPointsHistory {
+  cardId: string
+  rewardsProgram: RewardsProgram
+  amount: number
+  minimumSpendCents: number
+  timeFrameDays: number
+  yearlyFeeCents: number
+}
+
+export async function insertBonusPointsHistory(
+  row: InsertBonusPointsHistory,
+) {
+  const [result] = await sql<{ id: string }[]>`
+    INSERT INTO bonus_points_history (
+      card_id,
+      rewards_program,
+      amount,
+      minimum_spend_cents,
+      time_frame_days,
+      yearly_fee_cents
+    ) VALUES (
+      ${row.cardId},
+      ${row.rewardsProgram},
+      ${row.amount},
+      ${row.minimumSpendCents},
+      ${row.timeFrameDays},
+      ${row.yearlyFeeCents}
+    )
+    RETURNING id
+  `
+  return result
+}
 
 export async function getBonusPointsStats() {
   return sql<BonusPointsStats[]>`

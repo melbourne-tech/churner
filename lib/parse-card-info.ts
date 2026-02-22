@@ -1,6 +1,7 @@
 import { generateText, Output } from 'ai'
-import z from 'zod'
 import { stripIndent } from 'common-tags'
+import z from 'zod'
+import { RewardsProgram } from '~/data/types'
 
 const schema = z.object({
   pointsAmount: z
@@ -44,7 +45,7 @@ const systemPrompt = stripIndent`
 export async function parseCardInfo(
   markdown: string,
   cardName: string,
-  rewardsProgram?: 'QANTAS' | 'VELOCITY',
+  rewardsProgram: RewardsProgram,
 ) {
   const { output } = await generateText({
     model: 'google/gemini-3-flash',
@@ -54,7 +55,7 @@ export async function parseCardInfo(
     system: systemPrompt,
     prompt: stripIndent`
       Card: ${cardName}
-      Rewards Program: ${rewardsProgram ?? 'N/A'}
+      Rewards Program: ${rewardsProgram}
       
       Page content:
       ${markdown}

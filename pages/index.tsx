@@ -6,83 +6,38 @@ import CardLink from '~/components/CardLink'
 import RewardsProgramPicker from '~/components/RewardsProgramPicker'
 import Layout from '~/components/layout/Layout'
 import { Button } from '~/components/ui/Button'
-import { graphql } from '~/gql'
-import { RewardsProgram } from '~/gql/graphql'
+import { getCards } from '~/data/cards'
+import { RewardsProgram } from '~/data/types'
 import { useUrlState } from '~/lib/router'
-import { adminGraphQLClient } from '~/lib/supabase-admin'
 import { NextPageWithLayout } from '~/lib/types'
 
-const query = graphql(/* GraphQL */ `
-  query CardsQuery {
-    cards: cardsCollection {
-      edges {
-        node {
-          id
-          updatedAt
-          slug
-          name
-          imagePath
-          bonusPoints: bonusPointsCollection {
-            edges {
-              node {
-                id
-                updatedAt
-                rewardsProgram
-                amount
-                yearlyFeeCents
-              }
-            }
-          }
-          scores: cardScoresCollection {
-            edges {
-              node {
-                rewardsProgram
-                score
-              }
-            }
-          }
-          issuer {
-            id
-            slug
-            name
-          }
-        }
-      }
-    }
-  }
-`)
-
 export const getStaticProps = async () => {
-  const data = await adminGraphQLClient.request(query)
-  if (!data.cards) throw new Error('Failed to fetch data from Supabase')
+  const cards = await getCards()
 
   return {
     props: {
-      cards: data.cards.edges.map(({ node }) => ({
-        ...node,
-        bonusPoints: node.bonusPoints?.edges.map(({ node }) => node) ?? [],
-        scores: node.scores.edges.map(({ node }) => node),
-      })),
+      cards,
     },
     revalidate: 10 * 60, // 10 minutes
   }
 }
 
-interface HomePageProps
-  extends InferGetStaticPropsType<typeof getStaticProps> {}
+interface HomePageProps extends InferGetStaticPropsType<
+  typeof getStaticProps
+> {}
 
 const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
   const [rewardsProgram, setRewardsProgram] = useUrlState<RewardsProgram>(
     'program',
     RewardsProgram.Qantas,
-    [RewardsProgram.Qantas, RewardsProgram.Velocity]
+    [RewardsProgram.Qantas, RewardsProgram.Velocity],
   )
 
   const cards = useMemo(
     () =>
       allCards
         .filter((card) =>
-          card.scores.some((score) => score.rewardsProgram === rewardsProgram)
+          card.scores.some((score) => score.rewardsProgram === rewardsProgram),
         )
         .sort((a, b) => {
           const aScore =
@@ -94,17 +49,17 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
 
           const aPoints =
             a.bonusPoints.find(
-              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
             )?.amount ?? 0
           const bPoints =
             b.bonusPoints.find(
-              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
             )?.amount ?? 0
 
           return bScore - aScore || bPoints - aPoints
         }),
 
-    [allCards, rewardsProgram]
+    [allCards, rewardsProgram],
   )
 
   return (
@@ -133,7 +88,7 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
         <Button variant="secondary" asChild>
           <a
             href={`mailto:hello@churner.com.au?subject=${encodeURIComponent(
-              `Request a New Card`
+              `Request a New Card`,
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -160,11 +115,11 @@ const Home: NextPageWithLayout<HomePageProps> = ({ cards: allCards }) => {
             card.scores.find((score) => score.rewardsProgram === rewardsProgram)
               ?.score ?? 0
           const bonusPoints = card.bonusPoints.find(
-            (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+            (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
           )
 
           const cardAvailableRewardsPrograms = new Set(
-            card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram)
+            card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram),
           )
           const hasMultipleRewardsPrograms =
             cardAvailableRewardsPrograms.size > 1

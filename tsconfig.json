@@ -15,8 +15,16 @@
     "incremental": true,
     "paths": {
       "~/*": ["./*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      },
+      {
+        "name": "workflow"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

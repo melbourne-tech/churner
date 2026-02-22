@@ -11,80 +11,22 @@ import RewardsProgramPicker from '~/components/RewardsProgramPicker'
 import ScoreBar from '~/components/ScoreBar'
 import Layout from '~/components/layout/Layout'
 import { Button } from '~/components/ui/Button'
-import { graphql } from '~/gql'
-import { RewardsProgram } from '~/gql/graphql'
+import { getBonusPointsStats } from '~/data/bonus-points'
+import { getCardByIssuerIdAndSlug, getCardSlugsWithIssuer } from '~/data/cards'
+import { getIssuerBySlug } from '~/data/issuers'
+import { RewardsProgram } from '~/data/types'
 import { useUrlState } from '~/lib/router'
-import supabaseAdmin, { adminGraphQLClient } from '~/lib/supabase-admin'
 import { NextPageWithLayout } from '~/lib/types'
 import { formatAUDollars } from '~/lib/utils'
 
-const query = graphql(/* GraphQL */ `
-  query CardQuery($issuerId: UUID!, $slug: Opaque!) {
-    cardsCollection(
-      first: 1
-      filter: { issuerId: { eq: $issuerId }, slug: { eq: $slug } }
-    ) {
-      edges {
-        node {
-          id
-          updatedAt
-          slug
-          name
-          url
-          imagePath
-          issuer {
-            id
-            slug
-            name
-            url
-          }
-          bonusPoints: bonusPointsCollection(
-            orderBy: { rewardsProgram: AscNullsLast }
-          ) {
-            edges {
-              node {
-                id
-                rewardsProgram
-                amount
-                minimumSpendCents
-                timeFrameDays
-                yearlyFeeCents
-              }
-            }
-          }
-        }
-      }
-    }
-
-    bonusPointsStatsCollection {
-      edges {
-        node {
-          rewardsProgram
-          minAmount
-          maxAmount
-          minMinimumSpendCents
-          maxMinimumSpendCents
-          minYearlyFeeCents
-          maxYearlyFeeCents
-          minTimeFrameDays
-          maxTimeFrameDays
-        }
-      }
-    }
-  }
-`)
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data, error } = await supabaseAdmin
-    .from('cards')
-    .select('slug,issuer:issuers(slug)')
-  if (error) throw error
+  const cards = await getCardSlugsWithIssuer()
 
   return {
-    paths: data.map(({ slug, issuer }) => ({
+    paths: cards.map(({ slug, issuerSlug }) => ({
       params: {
         card_slug: slug,
-        issuer_slug: issuer?.slug,
+        issuer_slug: issuerSlug,
       },
     })),
     fallback: 'blocking',
@@ -95,31 +37,19 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const issuerSlug = params?.issuer_slug as string
   const cardSlug = params?.card_slug as string
 
-  const { data: issuerData } = await supabaseAdmin
-    .from('issuers')
-    .select('id')
-    .eq('slug', issuerSlug)
-    .maybeSingle()
-  if (!issuerData) return { notFound: true }
+  const issuer = await getIssuerBySlug(issuerSlug)
+  if (!issuer) return { notFound: true }
 
-  const data = await adminGraphQLClient.request(query, {
-    issuerId: issuerData.id,
-    slug: cardSlug,
-  })
-  const card = data.cardsCollection?.edges?.[0]?.node
+  const card = await getCardByIssuerIdAndSlug(issuer.id, cardSlug)
   if (!card) return { notFound: true }
+  if (card.bonusPoints.length === 0) return { notFound: true }
 
-  const bonusPoints = card.bonusPoints?.edges.map(({ node }) => node) ?? []
-  if (bonusPoints.length === 0) return { notFound: true }
+  const bonusPointsStats = await getBonusPointsStats()
 
   return {
     props: {
-      card: {
-        ...card,
-        bonusPoints,
-      },
-      bonusPointsStats:
-        data.bonusPointsStatsCollection?.edges.map(({ node }) => node) ?? [],
+      card,
+      bonusPointsStats,
     },
     revalidate: 10 * 60, // 10 minutes
   }
@@ -243,6 +173,15 @@ const CardPage: NextPageWithLayout<CardPageProps> = ({
             max={minMaxStats.maxTimeFrameDays!}
           />
         </div>
+
+        <p className="mt-8 text-xs text-muted-foreground text-center">
+          Last updated{' '}
+          {new Date(card.updatedAt).toLocaleDateString('en-AU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </p>
       </div>
     </>
   )

@@ -1,7 +1,7 @@
 import postgres from 'postgres'
 
 export const sql = postgres(process.env.DATABASE_URL!, {
-  max: 20,
+  max: 10,
   prepare: false,
   // ssl:
   //   process.env.NODE_ENV === 'production'

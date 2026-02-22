@@ -173,6 +173,15 @@ const CardPage: NextPageWithLayout<CardPageProps> = ({
             max={minMaxStats.maxTimeFrameDays!}
           />
         </div>
+
+        <p className="mt-8 text-xs text-muted-foreground text-center">
+          Last updated{' '}
+          {new Date(card.updatedAt).toLocaleDateString('en-AU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </p>
       </div>
     </>
   )

@@ -1,17 +1,17 @@
-/**
- * @type {import('next').NextConfig}
- */
-const nextConfig = {
+import type { NextConfig } from 'next'
+import { withWorkflow } from 'workflow/next'
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
     remotePatterns: [
       { hostname: 'ancvbyqrgdwaklclccxw.supabase.co' },
       ...(process.env.NODE_ENV !== 'production'
-        ? [{ hostname: 'localhost' }]
+        ? [{ hostname: '127.0.0.1' }]
         : []),
     ],
   },
 }
 
-module.exports = nextConfig
+export default withWorkflow(nextConfig)

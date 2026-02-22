@@ -92,16 +92,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  const issuerSlug = params?.issuer_slug as string
+  const cardSlug = params?.card_slug as string
+
   const { data: issuerData } = await supabaseAdmin
     .from('issuers')
     .select('id')
-    .eq('slug', params?.issuer_slug)
+    .eq('slug', issuerSlug)
     .maybeSingle()
   if (!issuerData) return { notFound: true }
 
   const data = await adminGraphQLClient.request(query, {
     issuerId: issuerData.id,
-    slug: params?.card_slug,
+    slug: cardSlug,
   })
   const card = data.cardsCollection?.edges?.[0]?.node
   if (!card) return { notFound: true }
@@ -122,28 +125,29 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   }
 }
 
-interface CardPageProps
-  extends InferGetStaticPropsType<typeof getStaticProps> {}
+interface CardPageProps extends InferGetStaticPropsType<
+  typeof getStaticProps
+> {}
 
 const CardPage: NextPageWithLayout<CardPageProps> = ({
   card,
   bonusPointsStats,
 }) => {
   const availableRewardsPrograms = card.bonusPoints.map(
-    ({ rewardsProgram }) => rewardsProgram
+    ({ rewardsProgram }) => rewardsProgram,
   )
   const [rewardsProgram, setRewardsProgram] = useUrlState<RewardsProgram>(
     'program',
     availableRewardsPrograms[0] ?? RewardsProgram.Qantas,
-    [RewardsProgram.Qantas, RewardsProgram.Velocity]
+    [RewardsProgram.Qantas, RewardsProgram.Velocity],
   )
   const hasMultipleRewardsPrograms = availableRewardsPrograms.length > 1
 
   const minMaxStats = bonusPointsStats.find(
-    (stats) => stats.rewardsProgram === rewardsProgram
+    (stats) => stats.rewardsProgram === rewardsProgram,
   )!
   const bonus = card.bonusPoints.find(
-    (bonus) => bonus.rewardsProgram === rewardsProgram
+    (bonus) => bonus.rewardsProgram === rewardsProgram,
   )!
 
   return (
@@ -185,7 +189,7 @@ const CardPage: NextPageWithLayout<CardPageProps> = ({
             <Button variant="secondary" asChild>
               <a
                 href={`mailto:hello@churner.com.au?subject=${encodeURIComponent(
-                  `Incorrect Info for ${card.issuer.name} ${card.name} (${card.id})`
+                  `Incorrect Info for ${card.issuer.name} ${card.name} (${card.id})`,
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -41,7 +41,7 @@ const buttonVariants = cva(
       variant: 'default',
       size: 'default',
     },
-  }
+  },
 )
 
 const loadingDotVariants = cva(
@@ -60,11 +60,12 @@ const loadingDotVariants = cva(
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 )
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   isLoading?: boolean
   asChild?: boolean
@@ -81,7 +82,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [isLoading, setIsLoading] = useState(false)
     const artificialDelayPromiseRef = useRef<Promise<void>>(Promise.resolve())
@@ -108,7 +109,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <LoadingDots />
           </div>
         ),
-      [isLoading, variant]
+      [isLoading, variant],
     )
 
     const Comp = asChild ? Slot : 'button'
@@ -117,7 +118,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({ variant, size, className }),
           isLoading &&
-            'select-none text-[rgba(0,0,0,0)] hover:text-[rgba(0,0,0,0)]'
+            'select-none text-[rgba(0,0,0,0)] hover:text-[rgba(0,0,0,0)]',
         )}
         ref={ref}
         {...props}
@@ -127,8 +128,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             cloneElement(
               children,
               undefined,
-              children.props.children,
-              loadingEl
+              (children.props as { children?: React.ReactNode }).children,
+              loadingEl,
             )
           ) : null
         ) : (
@@ -140,7 +141,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </Comp>
     )
-  }
+  },
 )
 Button.displayName = 'Button'
 

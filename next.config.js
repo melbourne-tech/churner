@@ -5,10 +5,12 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    domains:
-      process.env.NODE_ENV === 'production'
-        ? ['ancvbyqrgdwaklclccxw.supabase.co']
-        : ['localhost'],
+    remotePatterns: [
+      { hostname: 'ancvbyqrgdwaklclccxw.supabase.co' },
+      ...(process.env.NODE_ENV !== 'production'
+        ? [{ hostname: 'localhost' }]
+        : []),
+    ],
   },
 }
 

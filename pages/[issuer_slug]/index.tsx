@@ -69,10 +69,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  const issuerSlug = params?.issuer_slug as string
+
   const { data: issuerData } = await supabaseAdmin
     .from('issuers')
     .select('id,name')
-    .eq('slug', params?.issuer_slug)
+    .eq('slug', issuerSlug)
     .maybeSingle()
   if (!issuerData) return { notFound: true }
 
@@ -94,8 +96,9 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   }
 }
 
-interface IssuerPageProps
-  extends InferGetStaticPropsType<typeof getStaticProps> {}
+interface IssuerPageProps extends InferGetStaticPropsType<
+  typeof getStaticProps
+> {}
 
 const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
   issuer,
@@ -104,23 +107,23 @@ const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
   const availableRewardsPrograms = Array.from(
     new Set(
       allCards.flatMap((card) =>
-        card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram)
-      )
-    )
+        card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram),
+      ),
+    ),
   )
   const hasMultipleRewardsPrograms = availableRewardsPrograms.length > 1
 
   const [rewardsProgram, setRewardsProgram] = useUrlState<RewardsProgram>(
     'program',
     availableRewardsPrograms[0],
-    availableRewardsPrograms
+    availableRewardsPrograms,
   )
 
   const cards = useMemo(
     () =>
       allCards
         .filter((card) =>
-          card.scores.some((score) => score.rewardsProgram === rewardsProgram)
+          card.scores.some((score) => score.rewardsProgram === rewardsProgram),
         )
         .sort((a, b) => {
           const aScore =
@@ -132,17 +135,17 @@ const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
 
           const aPoints =
             a.bonusPoints.find(
-              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
             )?.amount ?? 0
           const bPoints =
             b.bonusPoints.find(
-              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+              (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
             )?.amount ?? 0
 
           return bScore - aScore || bPoints - aPoints
         }),
 
-    [allCards, rewardsProgram]
+    [allCards, rewardsProgram],
   )
 
   return (
@@ -167,11 +170,11 @@ const IssuerPage: NextPageWithLayout<IssuerPageProps> = ({
             card.scores.find((score) => score.rewardsProgram === rewardsProgram)
               ?.score ?? 0
           const bonusPoints = card.bonusPoints.find(
-            (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram
+            (bonusPoint) => bonusPoint.rewardsProgram === rewardsProgram,
           )
 
           const cardAvailableRewardsPrograms = new Set(
-            card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram)
+            card.bonusPoints.map(({ rewardsProgram }) => rewardsProgram),
           )
           const hasMultipleRewardsPrograms =
             cardAvailableRewardsPrograms.size > 1
